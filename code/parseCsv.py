@@ -7,10 +7,10 @@ def parseCsv():
     """
     
     # Reads all csv files into seperate Dataframes
-    mainCat = pd.read_csv("./data/InputCatGAMADR3.csv", index_col=0)
-    clusters = pd.read_csv("./data/samiDR3InputCatClusters.csv", index_col=0)
-    kinematics = pd.read_csv("./data/samiDR3StelKin.csv", index_col=0)
-    morphology = pd.read_csv("./data/samiDR3VisualMorphology.csv", index_col=0)
+    mainCat = pd.read_csv("./code/data/InputCatGAMADR3.csv", index_col=0)
+    clusters = pd.read_csv("./code/data/samiDR3InputCatClusters.csv", index_col=0)
+    kinematics = pd.read_csv("./code/data/samiDR3StelKin.csv", index_col=0)
+    morphology = pd.read_csv("./code/data/samiDR3VisualMorphology.csv", index_col=0)
 
     return mainCat, clusters, kinematics, morphology
 
