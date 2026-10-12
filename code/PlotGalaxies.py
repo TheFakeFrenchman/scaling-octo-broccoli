@@ -1,6 +1,6 @@
 """
     
-    Plots Faber-Jackson relation (TODO with uncertainties)
+    Plots Faber-Jackson relation (with uncertainties)
     TODO Plots Fundamental Plane relation (TODO with uncertainties)
     
     
@@ -19,8 +19,11 @@ df = pd.read_csv("code/data/viable_galaxies.csv")
 
 x = df["M_r"]
 y = df["sigma_re"]
+yerr = df['sigma_re_err']
 
-plt.scatter(x, y)
+
+plt.scatter(x, y, s= 10)
+plt.errorbar(x, y, yerr= yerr, fmt= 'none')
 plt.title('Faber–Jackson relation')
 plt.xlabel('Absolute Magnitude M_r')
 plt.ylabel('velocity dispersion σ (km/s)')

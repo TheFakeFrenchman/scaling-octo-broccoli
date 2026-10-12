@@ -38,9 +38,10 @@ massiveIds = set(massiveGama["catid"]) | set(massiveCluster["catid"])
 #Obtain velocity dispersion
 velDispIds = kinematics[kinematics["catid"].isin(massiveIds)]
 velDisp = velDispIds["sigma_re"].dropna()
+velDisperr = velDispIds["sigma_re_err"].dropna()
 catid = velDispIds["catid"].dropna()
 
-velDisp = pd.DataFrame({'catid': catid, 'sigma_re': velDisp})
+velDisp = pd.DataFrame({'catid': catid, 'sigma_re': velDisp, 'sigma_re_err' : velDisperr})
 
 
 
