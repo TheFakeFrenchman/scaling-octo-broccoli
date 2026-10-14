@@ -55,7 +55,12 @@ velDisp = velDisp.dropna()
 # Gather list of M_r insamiDR3InputCatClusters.csv
 M_rIdsCluster = clusters[clusters["catid"].isin(massiveIds)]
 
-M_rClusterList = pd.DataFrame({'catid': M_rIdsCluster["catid"], 'M_r': M_rIdsCluster["m_r"]})
+M_rClusterList = pd.DataFrame({
+    'catid': M_rIdsCluster["catid"], 
+    'M_r': M_rIdsCluster["m_r"],
+    'r_e': M_rIdsCluster["r_e"],
+    'mu_e': M_rIdsCluster["mu_within_1re"]
+    })
 
 M_rClusterList = M_rClusterList.dropna()
 
@@ -63,7 +68,12 @@ M_rClusterList = M_rClusterList.dropna()
 # Gather list of M_r InputCatGAMADR3.csv
 M_rIdsMainCat = mainCat[mainCat["catid"].isin(massiveIds)]
 
-M_rMainCatList = pd.DataFrame({'catid': M_rIdsMainCat["catid"],'M_r': M_rIdsMainCat["m_r"]})
+M_rMainCatList = pd.DataFrame({
+    'catid': M_rIdsMainCat["catid"],
+    'M_r': M_rIdsMainCat["m_r"],
+    'r_e': M_rIdsMainCat["r_e"],
+    'mu_e': M_rIdsMainCat["mu_within_1re"]
+    })
 
 M_rMainCatList = M_rMainCatList.dropna()
 
