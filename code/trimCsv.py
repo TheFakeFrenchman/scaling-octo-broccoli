@@ -15,58 +15,64 @@
 import pandas as pd
 from parseCsv import parseCsv
 
+STELLAR_MASS_THRESHOLD = 10
+ELLIPTICAL_GALAXIES = [0, 0.5]      # Both 0 and 0.5 are elliptical galaxies
+
 # Select only elliptical galaxies
 mainCat, clusters, kinematics, morphology = parseCsv()
-ellipt = morphology[morphology["type"].isin([0, 0.5])]   #Both 0 and 0.5 are elliptical galaxies
+ellipt = morphology[morphology["type"].isin(ELLIPTICAL_GALAXIES)]
 elliptIds = set(ellipt["catid"])
 
 
-#Select ellpitcal galxies with certain mass
-
-#Select in GAMA catalogue
-massiveGama = mainCat[(mainCat["mstar"] > 10)                    #Stellar mass stored as log value log(m_gal/m_sun)
-                  & (mainCat["catid"].isin(elliptIds))] 
+# Select ellpitcal galxies with certain mass
+massiveGama = mainCat[(mainCat["mstar"] > STELLAR_MASS_THRESHOLD)                    # Stellar mass stored as log value log(m_gal/m_sun)
+                    & (mainCat["catid"].isin(elliptIds))] 
             
-#Select in cluster catalogue
-massiveCluster = clusters[(clusters["mstar"] > 10)                   
-                  & (clusters["catid"].isin(elliptIds))] 
+massiveCluster = clusters[(clusters["mstar"] > STELLAR_MASS_THRESHOLD)                   
+                        & (clusters["catid"].isin(elliptIds))] 
             
-#Combine both catalogues
+# Combine both catalogues
 massiveIds = set(massiveGama["catid"]) | set(massiveCluster["catid"])
 
 
-#Obtain velocity dispersion
+
+# Obtain velocity dispersion
 velDispIds = kinematics[kinematics["catid"].isin(massiveIds)]
-velDisp = velDispIds["sigma_re"].dropna()
-velDisperr = velDispIds["sigma_re_err"].dropna()
-catid = velDispIds["catid"].dropna()
 
-velDisp = pd.DataFrame({'catid': catid, 'sigma_re': velDisp, 'sigma_re_err' : velDisperr})
+# Combines with velocity dispersion uncertainty
+velDisp = pd.DataFrame({
+    'catid': velDispIds["catid"], 
+    'sigma_re': velDispIds["sigma_re"], 
+    'sigma_re_err': velDispIds["sigma_re_err"]
+    })
 
-
-
-
-
-
-
-#Obtain Absolute r-band magnitude 
-
-#gather list of M_r insamiDR3InputCatClusters.csv
-M_rIds_cluster = clusters[clusters["catid"].isin(massiveIds)]
-M_r_cluster = M_rIds_cluster["m_r"].dropna()
-M_rcatid_cluster = M_rIds_cluster["catid"].dropna()
-
-M_r_catid_cluster_list = pd.DataFrame({'catid': M_rcatid_cluster, 'M_r': M_r_cluster})
+velDisp = velDisp.dropna()
 
 
-#gather list of M_r InputCatGAMADR3.csv
-M_rIds_mainCat = mainCat[mainCat["catid"].isin(massiveIds)]
-M_r_mainCat = M_rIds_mainCat["m_r"].dropna()
-M_rcatid_mainCat = M_rIds_mainCat["catid"].dropna()
 
-M_r_catid_mainCat_list = pd.DataFrame({'catid': M_rcatid_mainCat, 'M_r': M_r_mainCat})
+# Obtain Absolute r-band magnitude 
 
-M_r = pd.concat([M_r_catid_mainCat_list, M_r_catid_cluster_list]) #combine both lists
+# Gather list of M_r insamiDR3InputCatClusters.csv
+M_rIdsCluster = clusters[clusters["catid"].isin(massiveIds)]
 
-viable_galaxies = pd.merge(velDisp, M_r, how="left", on="catid") #combine velocity dispersion and Absolute r-band magnitude lists
-viable_galaxies.dropna(how= 'any').to_csv("code/data/viable_galaxies.csv", index=False)    #delete any rows where either velocity dispersion or Absolute r-band magnitude are empty and print as a csv file
+M_rClusterList = pd.DataFrame({'catid': M_rIdsCluster["catid"], 'M_r': M_rIdsCluster["m_r"]})
+
+M_rClusterList = M_rClusterList.dropna()
+
+
+# Gather list of M_r InputCatGAMADR3.csv
+M_rIdsMainCat = mainCat[mainCat["catid"].isin(massiveIds)]
+
+M_rMainCatList = pd.DataFrame({'catid': M_rIdsMainCat["catid"],'M_r': M_rIdsMainCat["m_r"]})
+
+M_rMainCatList = M_rMainCatList.dropna()
+
+
+# Combine both lists
+M_r = pd.concat([M_rMainCatList, M_rClusterList])
+
+# Combine velocity dispersion and Absolute r-band magnitude lists
+viableGalaxies = pd.merge(velDisp, M_r, how="left", on="catid")
+
+# Delete any rows where either velocity dispersion or Absolute r-band magnitude are empty and print as a csv file
+viableGalaxies.dropna().to_csv("code/data/viable_galaxies.csv", index=False)

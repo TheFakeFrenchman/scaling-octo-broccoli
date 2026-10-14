@@ -23,7 +23,7 @@ yerr = df['sigma_re_err']
 
 
 plt.scatter(x, y, s= 10)
-plt.errorbar(x, y, yerr= yerr, fmt= 'none')
+plt.errorbar(x, y, yerr=yerr, fmt='none')
 plt.title('Faber–Jackson relation')
 plt.xlabel('Absolute Magnitude M_r')
 plt.ylabel('velocity dispersion σ (km/s)')
