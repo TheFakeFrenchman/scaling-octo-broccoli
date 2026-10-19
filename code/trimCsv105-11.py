@@ -3,10 +3,7 @@
     Filters through main catalogue and clusters catalogue to find
         - Massive eliptical galaxies
         - Keeps their velocity dispersion and absolute r-band magnitude for FJ relation
-        - TODO Keeps uncertainties for FJ relation
-        - TODO Keep effective radius and Surface Brightness for FJ relation
-        - TODO Keeps uncertainties for FP relation
-        
+     
     Puts this information within a new CSV "viable_galaxies.csv"
 
 
