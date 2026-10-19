@@ -20,15 +20,15 @@ df = pd.read_csv("code/data/viable_galaxies.csv")
 # FABER JACKSON (OLD)
 
 x = df["M_r"]
-y = df["sigma_re"]
-yerr = df['sigma_re_err']
+y = np.log(df["sigma_re"])
+yerr = np.log(df['sigma_re_err'] + df["sigma_re"]) - np.log(df["sigma_re"])
 
 
 plt.scatter(x, y, s= 10)
 plt.errorbar(x, y, yerr=yerr, fmt='none')
 plt.title('Faber–Jackson relation')
 plt.xlabel('Absolute Magnitude M_r')
-plt.ylabel('velocity dispersion σ (km/s)')
+plt.ylabel('Log velocity dispersion σ (km/s)')
 plt.gca().invert_xaxis()
 
 #line of best fit
@@ -56,8 +56,8 @@ for file, label, colour in datasets:
     df = pd.read_csv(file)
 
     x = df["M_r"]
-    y = df["sigma_re"]
-    yerr = df["sigma_re_err"]
+    y = np.log(df["sigma_re"])
+    yerr = np.log(df['sigma_re_err'] + df["sigma_re"]) - np.log(df["sigma_re"])
 
     # Plot galaxy points
     plt.scatter(x, y, s=12, color=colour, label=label)
@@ -72,7 +72,7 @@ for file, label, colour in datasets:
 
 plt.title("Faber–Jackson Relation Across Stellar Mass Ranges")
 plt.xlabel("Absolute Magnitude M_r")
-plt.ylabel("Velocity Dispersion σ (km/s)")
+plt.ylabel("Log Velocity Dispersion σ (km/s)")
 plt.gca().invert_xaxis()
 plt.legend()
 
