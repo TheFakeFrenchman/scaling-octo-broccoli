@@ -20,8 +20,8 @@ df = pd.read_csv("code/data/viable_galaxies.csv")
 # FABER JACKSON (OLD)
 
 x = df["M_r"]
-y = np.log(df["sigma_re"])
-yerr = np.log(df['sigma_re_err'] + df["sigma_re"]) - np.log(df["sigma_re"])
+y = np.log10(df["sigma_re"])
+yerr = np.log10(np.exp(1)) * ((df["sigma_re_err"]) / df["sigma_re"])
 
 
 plt.scatter(x, y, s= 10)
@@ -56,8 +56,8 @@ for file, label, colour in datasets:
     df = pd.read_csv(file)
 
     x = df["M_r"]
-    y = np.log(df["sigma_re"])
-    yerr = np.log(df['sigma_re_err'] + df["sigma_re"]) - np.log(df["sigma_re"])
+    y = np.log10(df["sigma_re"])
+    yerr = np.log10(np.exp(1)) * ((df["sigma_re_err"]) / df["sigma_re"])
 
     # Plot galaxy points
     plt.scatter(x, y, s=12, color=colour, label=label)
