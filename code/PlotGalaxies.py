@@ -34,7 +34,7 @@ plt.gca().invert_xaxis()
 #line of best fit
 m, c, *_ = stats.linregress(x, y)
 plt.plot(x, m*x + c, color='r')
-
+print('gradient of', m, "giving a FJ power relation of", -0.4 / m)
 
 plt.show()
 
@@ -67,6 +67,7 @@ for file, label, colour in datasets:
 
     x_fit = np.linspace(x.min(), x.max(), 100)
     plt.plot(x, m*x + c, color=colour, linewidth=2)
+    print('gradient of', m, "giving a FJ power relation of", -0.4 / m)
 
 
 
