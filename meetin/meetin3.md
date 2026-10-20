@@ -4,8 +4,8 @@
 - **Date:** 2026-10-15
 - **Time:** 12:6–12:25
 - **Location/Platform:** tyree energy building, UNSW, NSW, Australia
-- **Facilitator:** Me
-- **Note-taker:** Me
+- **Facilitator:** Kyle
+- **Note-taker:** Kyle
 
 ## Attendees
 - Daniel Francis

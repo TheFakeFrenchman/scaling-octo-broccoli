@@ -4,8 +4,8 @@
 - **Date:** 2026-09-24
 - **Time:** 12:16–12:26
 - **Location/Platform:** Sir John clancy Auditorium, UNSW, NSW, Australia
-- **Facilitator:** Me
-- **Note-taker:** Me
+- **Facilitator:** Daniel
+- **Note-taker:** Daniel
 
 ## Attendees
 - Daniel Francis
